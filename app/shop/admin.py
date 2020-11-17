@@ -48,12 +48,12 @@ class OrderAdminInline(admin.TabularInline):
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    readonly_fields = ['user', 'total_sum']
+    readonly_fields = ['user', 'total_sum', 'count_products']
     inlines = [OrderAdminInline, ]
 
     fieldsets = (
         ('Cart', {'fields': ['user']}),
-        ('Total', {'fields': ['total_sum']}),
+        ('Total', {'fields': [('total_sum', 'count_products')]}),
     )
 
     def get_queryset(self, request):

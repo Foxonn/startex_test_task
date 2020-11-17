@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser, Permission
 from django.core.validators import MinValueValidator
 from django.core.validators import FileExtensionValidator
 from django.dispatch import receiver
+from django.db.models import Sum
 
 import decimal
 import os
@@ -129,7 +130,7 @@ class Cart(models.Model):
 
     @property
     def count_products(self):
-        return self.orders.count()
+        return self.orders.aggregate(Sum('count')).get('count__sum', 0)
 
     @property
     def total_sum(self):
